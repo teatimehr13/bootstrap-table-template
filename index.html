@@ -9,8 +9,19 @@
 
     <link rel="stylesheet" href="./Envir/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="./Envir/bootstrap/bootstrap.css">
+    <!-- <link rel="stylesheet" href="./Envir/css/style2.css"> -->
+    <link rel="stylesheet" href="./Envir/css/nav.css">
+    <link rel="stylesheet" href="./Envir/css/main.css">
+    <link rel="stylesheet" href="./Envir/css/form_el.css">
+    <link rel="stylesheet" href="./Envir/css/table.css">
+    <link rel="stylesheet" href="./Envir/css/btn.css">
+    <link rel="stylesheet" href="./Envir/css/swal.css">
+    <link href="./Envir/css/sidebars.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <link href="https://s3-us-west-2.amazonaws.com/colors-css/2.2.0/colors.min.css" rel="stylesheet">
     <link href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <style>
@@ -23,8 +34,14 @@
 <body>
 
     <div class="container custom-table">
-        <table id="table" data-search="true" data-show-print="true" data-show-columns="true"
-            data-mobile-responsive="true" data-height="460" data-pagination="true">
+        <table id="table">
+            <!-- <thead>
+              <tr>
+                <th data-field="id">ID</th>
+                <th data-field="name">Item Name</th>
+                <th data-field="price">Item Price</th>
+              </tr>
+            </thead> -->
         </table>
     </div>
 
@@ -40,9 +57,31 @@
     <script src="https://unpkg.com/bootstrap-table@1.21.4/dist/extensions/print/bootstrap-table-print.min.js"></script>
     <script
         src="https://unpkg.com/bootstrap-table@1.21.4/dist/extensions/mobile/bootstrap-table-mobile.min.js"></script>
+    <script src="./Envir/b_sweetalert/sweetalert.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script>
         var $table = $('#table')
+        function cellStyles(value, row, index, field) {
+            var classes = [];
+            var bgc = '';
+
+            if (value == '0') {
+                bgc = 'red';
+            } else {
+                bgc = 'blue'
+            }
+
+            return {
+                css: {
+                    color: bgc
+                }
+            }
+        }
+
+        function btn(value, row, index, field) {
+            return `<button type="button" class="btn btn-primary btn-sm">Primary</button>`
+        }
 
         $(function () {
             var data = [
@@ -157,7 +196,8 @@
             var col = [
                 {
                     field: 'id',
-                    title: 'Item ID'
+                    title: 'Item ID',
+                    cellStyle: cellStyles
                 },
                 {
                     field: 'name',
@@ -166,14 +206,27 @@
                 {
                     field: 'price',
                     title: 'Item Price'
+                },
+                {
+                    filed: 'detail',
+                    title: 'check detail',
+                    formatter: btn
                 }
             ]
 
             $table.bootstrapTable({
+                search:true,
+                mobileResponsive:true,
+                showPrint:true,
+                showColumns:true,
+                height:460,
+                pagination:true,
                 data: data,
                 columns: col,
             })
         })
+
+
     </script>
 </body>
 
